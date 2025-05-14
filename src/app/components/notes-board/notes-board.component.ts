@@ -43,18 +43,19 @@ export class NotesBoardComponent implements OnInit {
 
   addNote() {
     const note: Note = {
-      id: Date.now().toString(), // ID string olarak güncellendi
+      id: Date.now().toString(),
       content: '',
       tags: [],
       color: '#fff8b3',
-      x: Math.random() * 100 + 20, // Rastgele başlangıç pozisyonu
+      x: Math.random() * 100 + 20,
       y: Math.random() * 100 + 20,
       width: 250,
       height: 220,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      isMinimized: false
     };
-    this.notes = [...this.notes, note]; // Immutable update
+    this.notes = [...this.notes, note];
     this.saveNotes();
   }
 

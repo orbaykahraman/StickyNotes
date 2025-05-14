@@ -1,6 +1,5 @@
-// model/note.ts
 export interface Note {
-  id: string; // String olarak kalacak
+  id: string;
   content: string;
   color: string;
   width: number;
@@ -9,5 +8,8 @@ export interface Note {
   y: number;
   updatedAt: Date;
   createdAt: Date;
-  tags: string[]; // Optional (?) kaldırıldı
+  tags: string[];
+  isMinimized: boolean;
+  originalWidth?: number; // Opsiyonel: Orijinal genişlik
+  originalHeight?: number; // Opsiyonel: Orijinal yükseklik;
 }

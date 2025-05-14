@@ -1,33 +1,40 @@
 <div class="note"
+     [ngClass]="{'minimized': note.isMinimized}"
      [ngStyle]="{
-        'background-color': note.color,
-        'width.px': note.width,
-        'height.px': note.height,
-        'transform': 'rotate(-1deg)'
+        'background-color': note.isMinimized ? 'transparent' : note.color,
+        'width.px': note.isMinimized ? 120 : note.width,
+        'height.px': note.isMinimized ? 2 : note.height,
+        'transform': note.isMinimized ? 'none' : 'rotate(-1deg)',
+        'box-shadow': note.isMinimized ? 'none' : '0 8px 20px rgba(0,0,0,0.12)'
      }"
      cdkDrag
      [cdkDragFreeDragPosition]="{x: note.x, y: note.y}"
      (cdkDragEnded)="onDragEnd($event)">
 
-  <div class="note-header" cdkDragHandle>
-    <span class="drag-handle">☰</span>
-    <input type="color"
-           class="color-picker"
-           [(ngModel)]="note.color"
-           (change)="updateNote()" />
+  <div class="minimized-bar" *ngIf="note.isMinimized"
+       [style.backgroundColor]="note.color"
+       (click)="toggleMinimize()">
+    <span class="minimized-title">{{ truncateText(note.content, 15) }}</span>
+    <span class="expand-icon">⬏</span>
   </div>
 
-  <textarea [(ngModel)]="note.content"
-            (ngModelChange)="updateNote()"
-            placeholder="Notunu yaz... ✍️"
-            style="color: #333333"> <!-- Sabit siyah metin rengi -->
-  </textarea>
+  <div *ngIf="!note.isMinimized">
+    <div class="note-header" cdkDragHandle>
+      <span class="drag-handle">☰</span>
+      <button class="minimize-btn" (click)="toggleMinimize()" title="Küçült">─</button>
+      <input type="color" class="color-picker" [(ngModel)]="note.color" (change)="updateNote()" />
+    </div>
 
-  <div class="note-footer">
-    <button class="save-btn" (click)="saveNote()">
-      <span class="btn-icon">✓</span>
-      Kaydet
-    </button>
-    <small class="timestamp">{{ note.updatedAt | date:'short' }}</small>
+    <textarea [(ngModel)]="note.content"
+              (ngModelChange)="updateNote()"
+              placeholder="Notunu yaz... ✍️"
+              style="color: #333333"></textarea>
+
+    <div class="note-footer">
+      <button class="save-btn" (click)="saveNote()">
+        <span class="btn-icon">✓</span> Kaydet
+      </button>
+      <small class="timestamp">{{ note.updatedAt | date:'short' }}</small>
+    </div>
   </div>
 </div>

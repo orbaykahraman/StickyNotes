@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, Output, Pipe, PipeTransform} from '@angular/core';
 import { Note } from "../../model/note";
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 
@@ -57,6 +57,26 @@ export class StickyNoteComponent {
 
 
   getTextColor(): string {
-    return '#333333'; // Her zaman siyah döner
+    return '#333333';
+  }
+  toggleMinimize(): void {
+    if (!this.note.isMinimized) {
+      // Küçültmeden önce orijinal boyutları sakla
+      this.note['originalWidth'] = this.note.width;
+      this.note['originalHeight'] = this.note.height;
+    } else {
+      // Geri yükle
+      this.note.width = this.note['originalWidth'] || 250;
+      this.note.height = this.note['originalHeight'] || 220;
+    }
+
+    this.note.isMinimized = !this.note.isMinimized;
+    this.updateNote();
+  }
+
+  truncateText(value: string, limit: number = 15): string {
+    if (!value) return '';
+    return value.length > limit ? value.substring(0, limit) + '...' : value;
   }
 }
+

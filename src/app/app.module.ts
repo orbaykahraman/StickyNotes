@@ -9,12 +9,15 @@ import {CdkDrag, DragDropModule} from "@angular/cdk/drag-drop";
 import {FormsModule} from "@angular/forms";
 import { NotesBoardComponent } from './components/notes-board/notes-board.component';
 import { HttpClientModule } from '@angular/common/http';
+import {TruncatePipe} from "./pipes/truncate.pipe";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     StickyNoteComponent,
-    NotesBoardComponent
+    NotesBoardComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
