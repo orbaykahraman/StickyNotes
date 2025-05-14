@@ -1,0 +1,33 @@
+<div class="note"
+     [ngStyle]="{
+        'background-color': note.color,
+        'width.px': note.width,
+        'height.px': note.height,
+        'transform': 'rotate(-1deg)'
+     }"
+     cdkDrag
+     [cdkDragFreeDragPosition]="{x: note.x, y: note.y}"
+     (cdkDragEnded)="onDragEnd($event)">
+
+  <div class="note-header" cdkDragHandle>
+    <span class="drag-handle">☰</span>
+    <input type="color"
+           class="color-picker"
+           [(ngModel)]="note.color"
+           (change)="updateNote()" />
+  </div>
+
+  <textarea [(ngModel)]="note.content"
+            (ngModelChange)="updateNote()"
+            placeholder="Notunu yaz... ✍️"
+            style="color: #333333"> <!-- Sabit siyah metin rengi -->
+  </textarea>
+
+  <div class="note-footer">
+    <button class="save-btn" (click)="saveNote()">
+      <span class="btn-icon">✓</span>
+      Kaydet
+    </button>
+    <small class="timestamp">{{ note.updatedAt | date:'short' }}</small>
+  </div>
+</div>

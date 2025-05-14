@@ -1,0 +1,26 @@
+<!-- notes-board.component.html -->
+<div class="board-controls">
+  <button class="new-note-btn" (click)="addNote()">
+    <span class="icon">📌</span> Yeni Not Ekle
+  </button>
+
+  <div class="search-container">
+    <input [(ngModel)]="searchQuery"
+           placeholder="Notlarda ara..."
+           class="search-input" />
+    <span class="search-icon">🔍</span>
+  </div>
+
+  <button class="export-btn" (click)="exportNotesAsText()">
+    <span class="icon">📤</span> Dışa Aktar
+  </button>
+</div>
+
+<div class="notes-container">
+  <app-sticky-note
+    *ngFor="let note of filteredNotes(); trackBy: trackByNotes"
+    [note]="note"
+    (noteChange)="updateNote($event)"
+    (delete)="deleteNote(note.id)">
+  </app-sticky-note>
+</div>
